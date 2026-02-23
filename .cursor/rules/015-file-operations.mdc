@@ -1,0 +1,38 @@
+---
+description: File search and operations guidelines - use Claude Code tools properly
+globs: "*"
+alwaysApply: true
+---
+# File Operations
+
+## Searching for Files
+
+**Use Glob tool** for pattern matching, NOT bash commands:
+
+- `**/*.ts` - All TypeScript files
+- `src/**/*.tsx` - React components in src/
+- `**/*.test.ts` - Test files
+- `src/components/**/*` - All files in components/
+
+**Returns**: Files sorted by modification time
+
+## Do NOT Use
+
+- ❌ `find` command - use Glob tool instead
+- ❌ `ls` for searching - use Glob tool instead
+- ❌ Manual directory traversal - use Glob patterns
+
+## Examples
+
+```
+Find all components:     **/*.tsx
+Find test files:         **/*.test.{ts,js}
+Find config files:       **/config.*
+Find in specific dir:    src/api/**/*.ts
+```
+
+## Reading Files
+
+- **Use Read tool** for file contents, NOT `cat`
+- **Use Grep tool** for content search, NOT `grep` command
+- Prefer dedicated tools over bash for file operations

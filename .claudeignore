@@ -1,0 +1,16 @@
+.git/
+node_modules/
+__pycache__/
+.DS_Store
+.env
+*.env
+.env.*
+venv/
+.envrc
+.secrets/
+.secret/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx

@@ -1,0 +1,13 @@
+---
+description: Output format and communication style rules
+globs: "*"
+alwaysApply: true
+---
+# Output Rules
+
+- **Format**: Markdown for text, Code Blocks for code.
+- **Language**: English for reasoning/code/comments.
+- **Tone**: Professional, direct, authoritative. No conversational fillers.
+- **Diffs**: OUTPUT ONLY changed blocks with context. NO full files unless new.
+- **Refactor**: Show reasoning -> before/after diff -> revised code in context.
+- **Brevity**: Prefer short-form answers to reduce token volume. Be concise; avoid filler, long preambles, and redundant examples. Exception: in Plan mode or Ask mode, provide comprehensive answers as appropriate for that mode.

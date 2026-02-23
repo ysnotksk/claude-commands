@@ -1,0 +1,134 @@
+---
+description: Astro/Vite CI/CD build error debugging protocols
+globs: "*.astro,astro.config.*,vite.config.*"
+---
+# Astro/Vite Debugging Rules
+
+## ビルドエラーのデバッグプロトコル
+
+### Rule 1: ファイル存在確認を最優先
+**Trigger:** CI/CDでビルドエラーが発生し、ローカルでは動作する場合
+**Instruction:**
+1. **FIRST STEP:** ファイルがGitリポジトリに含まれているか確認
+   ```bash
+   git ls-files | grep "target/file/path"
+   ```
+2. `.gitignore`でファイルが除外されていないか確認
+   ```bash
+   git check-ignore -v path/to/file
+   ```
+3. ローカルに存在するがリポジトリに含まれていない場合
+   ```bash
+   git add -f path/to/file  # 強制的に追加
+   ```
+
+**Why:** モジュール解決エラーの根本原因は、ファイルが存在しないことが多い。設定の問題と勘違いして時間を浪費しない。
+
+### Rule 2: .gitignoreの広範なパターンに注意
+**Trigger:** `.gitignore`にディレクトリ名のみのパターン（`lib/`、`src/`など）を追加する場合
+**Instruction:**
+1. **警告:** `lib/`、`dist/`、`build/`などの広範なパターンは、ソースコードディレクトリも除外する可能性がある
+2. **推奨:** 具体的なパスを使用するか、例外パターンを追加
+   ```gitignore
+   # ❌ 危険: すべてのlibディレクトリを除外
+   lib/
+   
+   # ✅ 安全: Pythonのビルド成果物のみを除外
+   **/lib/
+   !frontend/src/lib/
+   !src/lib/
+   ```
+3. **検証:** 重要なソースコードディレクトリが除外されていないか確認
+   ```bash
+   git check-ignore -v src/lib/important-file.ts
+   ```
+
+**Why:** `.gitignore`の設定ミスは、ファイルが無視され、CI/CDでビルドが失敗する原因となる。
+
+### Rule 3: モジュール解決エラーのデバッグ順序
+**Trigger:** `Could not resolve`、`Cannot find module`、`ENOENT`エラー
+**Instruction:**
+1. **Step 1: ファイル存在確認**
+   - `git ls-files | grep "target/file"`
+   - ローカルに存在するか: `ls -la path/to/file`
+   - リポジトリに含まれているか: `git log --all -- path/to/file`
+   
+2. **Step 2: .gitignore確認**
+   - `git check-ignore -v path/to/file`
+   
+3. **Step 3: モジュール解決設定確認**
+   - `tsconfig.json`の`paths`設定
+   - `astro.config.mjs`/`vite.config.js`の`resolve.alias`設定
+   - `resolve.extensions`に必要な拡張子が含まれているか
+   
+4. **Step 4: インポートパス確認**
+   - 相対パスの正確性
+   - 拡張子の有無
+   - エイリアスの正確性
+
+**Why:** 問題を体系的に絞り込むことで、効率的にデバッグできる。
+
+### Rule 4: Astro/Viteモジュール解決のベストプラクティス
+**Trigger:** Astroプロジェクトで新しいモジュールを作成する場合
+**Instruction:**
+1. **TypeScript paths設定** (`tsconfig.json`)
+   ```json
+   {
+     "compilerOptions": {
+       "baseUrl": ".",
+       "paths": {
+         "@/*": ["src/*"]
+       }
+     }
+   }
+   ```
+
+2. **Vite alias設定** (`astro.config.mjs`)
+   ```javascript
+   import { resolve } from 'path';
+   import { dirname } from 'path';
+   import { fileURLToPath } from 'url';
+   
+   const __filename = fileURLToPath(import.meta.url);
+   const __dirname = dirname(__filename);
+   
+   export default defineConfig({
+     vite: {
+       resolve: {
+         alias: {
+           '@': resolve(__dirname, './src'),
+         },
+         extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json', '.astro'],
+       },
+     },
+   });
+   ```
+
+3. **インポート** (*.astro, *.ts)
+   ```typescript
+   // ✅ 推奨: エイリアス + 拡張子明示（Cloudflare Pages対応）
+   import { fetchData } from '@/lib/api.ts';
+   
+   // ⚠️ ローカルでは動作するが、CI/CDで失敗する可能性
+   import { fetchData } from '@/lib/api';
+   ```
+
+**Why:** Cloudflare Pagesなどのビルド環境では、モジュール解決がローカルと異なる場合がある。明示的な設定で互換性を確保。
+
+### Rule 5: CI/CDとローカル環境の差異の調査
+**Trigger:** ローカルでは成功するが、CI/CDで失敗する場合
+**Instruction:**
+1. **ファイルの存在:** 最優先で確認（Rule 1参照）
+2. **環境変数:** CI/CDで環境変数が正しく設定されているか
+3. **依存関係:** `package-lock.json`がコミットされているか
+4. **Node.jsバージョン:** ローカルとCI/CDで同じバージョンか
+5. **ビルドディレクトリ:** CI/CDの`root directory`設定が正しいか
+6. **キャッシュ:** CI/CDのキャッシュが古い可能性（キャッシュクリア後に再ビルド）
+
+**Why:** CI/CDとローカル環境の違いを理解することで、問題を迅速に特定できる。
+
+## Summary
+- **最重要:** モジュール解決エラーが発生したら、まず`git ls-files`でファイルの存在を確認
+- `.gitignore`の広範なパターン（`lib/`など）に注意
+- Astro/Viteでは、エイリアス設定と拡張子明示が重要
+- CI/CDとローカルの差異を常に意識する

@@ -1,0 +1,29 @@
+---
+description: Git Commit Policy and Log Standards
+globs: "*"
+alwaysApply: true
+---
+# Git Policy
+
+## Commit Message Convention
+- **Style**: Strictly follow **Conventional Commits**.
+  - Format: `<type>[optional scope]: <description>`
+  - Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+
+## Rules for Important Features
+- **Trigger**: When implementing a "Major Feature" or "Complex Logic".
+- **Requirement**: The commit message Body MUST include:
+    1. **Context**: What was the problem or missing feature?
+    2. **Solution**: Technical approach taken.
+    3. **Impact**: What user-facing changes occurred?
+- **Granularity**: Prefer atomic commits. Do not squash unrelated features into one "important" commit unless they are part of a single logical unit of work.
+
+## Example
+```text
+feat(auth): add user authentication via magic links
+
+- Context: Users needed a passwordless login method.
+- Implemented `AuthService` to handle magic link generation with JWT.
+- Added new API endpoint `/api/auth/magic-login`.
+- Security: Tokens expire after 15 minutes to enhance security.
+```

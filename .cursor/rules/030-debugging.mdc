@@ -1,0 +1,12 @@
+---
+description: Debugging and problem-solving methodology
+globs: "*"
+alwaysApply: true
+---
+# Debugging Rules
+
+- **Step 1**: Identify symptom (UI, flow, data, async, state).
+- **Step 2**: Hypothesize causes before changing code.
+- **Step 3**: Investigate: console.log, DevTools, object inspection, minimal repro.
+- **Step 4**: Report: Rank causes, explain steps, propose fix with rationale.
+- **Step 5**: Fix: Targeted, include error handling, validation, and verification.
