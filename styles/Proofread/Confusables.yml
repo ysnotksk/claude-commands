@@ -1,0 +1,31 @@
+extends: existence
+message: "Commonly confused word: '%s'. Verify correct usage (e.g., affect/effect, complement/compliment, discrete/discreet)."
+level: suggestion
+ignorecase: true
+tokens:
+  - 'affect'
+  - 'effect'
+  - 'complement'
+  - 'compliment'
+  - 'discrete'
+  - 'discreet'
+  - 'elicit'
+  - 'illicit'
+  - 'ensure'
+  - 'insure'
+  - 'farther'
+  - 'further'
+  - 'flaunt'
+  - 'flout'
+  - 'imply'
+  - 'infer'
+  - 'loose'
+  - 'lose'
+  - 'precede'
+  - 'proceed'
+  - 'principal'
+  - 'principle'
+  - 'stationary'
+  - 'stationery'
+  - 'advise'
+  - 'advice'

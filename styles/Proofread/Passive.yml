@@ -1,0 +1,23 @@
+extends: existence
+message: "Passive voice detected: '%s'. Consider using active voice."
+level: suggestion
+ignorecase: false
+tokens:
+  - 'was \w+ed'
+  - 'were \w+ed'
+  - 'is being \w+ed'
+  - 'are being \w+ed'
+  - 'was being \w+ed'
+  - 'were being \w+ed'
+  - 'has been \w+ed'
+  - 'have been \w+ed'
+  - 'had been \w+ed'
+  - 'will be \w+ed'
+  - 'is \w+ed by'
+  - 'are \w+ed by'
+  - 'was \w+en'
+  - 'were \w+en'
+  - 'has been \w+en'
+  - 'have been \w+en'
+  - 'had been \w+en'
+  - 'will be \w+en'

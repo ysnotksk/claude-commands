@@ -1,0 +1,45 @@
+extends: substitution
+message: "Redundant phrase '%s'. Use '%s' instead."
+level: warning
+ignorecase: true
+swap:
+  in order to: to
+  at this point in time: now
+  at the present time: now
+  due to the fact that: because
+  in spite of the fact that: although
+  for the purpose of: to
+  in the event that: if
+  on the occasion of: when
+  prior to the start of: before
+  has the ability to: can
+  is able to: can
+  it is necessary that: must
+  in close proximity to: near
+  a large number of: many
+  a sufficient number of: enough
+  on a daily basis: daily
+  on a regular basis: regularly
+  at the end of the day: ultimately
+  first and foremost: first
+  each and every: each
+  one and the same: the same
+  basic fundamentals: fundamentals
+  end result: result
+  final outcome: outcome
+  free gift: gift
+  future plans: plans
+  past history: history
+  true fact: fact
+  completely eliminate: eliminate
+  totally unique: unique
+  absolutely essential: essential
+  advance planning: planning
+  brief summary: summary
+  close scrutiny: scrutiny
+  exact same: same
+  general consensus: consensus
+  joint collaboration: collaboration
+  new innovation: innovation
+  personal opinion: opinion
+  unexpected surprise: surprise
