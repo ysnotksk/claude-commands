@@ -24,7 +24,6 @@ Custom [slash commands](https://docs.anthropic.com/en/docs/claude-code/tutorials
 | Command | Language | Description |
 |---------|----------|-------------|
 | `/nanobanana` | English | Generate images using Google Gemini (`gemini-2.5-flash-image`). |
-| `/imagen` | English | Generate images using Google Cloud Imagen 4.0. |
 
 ### Problem Solving
 
@@ -66,7 +65,7 @@ brew install vale
 brew install mecab mecab-ipadic
 ```
 
-`/nanobanana` requires `GEMINI_API_KEY` environment variable. `/imagen` requires Google Cloud credentials (`gcloud auth print-access-token`).
+`/nanobanana` requires `GEMINI_API_KEY` environment variable.
 
 ## Usage Examples
 
@@ -78,7 +77,6 @@ brew install mecab mecab-ipadic
 /proofread-jp 今日はとても天気がいいである。まず最初に挨拶をします。
 /proofread-mode /path/to/document.txt
 /nanobanana a cat sitting on a rainbow
-/imagen photorealistic mountain landscape at sunset
 /delphi-method How can we reduce onboarding time for new engineers?
 /worklog
 ```
