@@ -37,6 +37,21 @@ Custom [slash commands](https://docs.anthropic.com/en/docs/claude-code/tutorials
 |---------|----------|-------------|
 | `/worklog` | English | End-of-session sign-off: update `.backlog/` files and write local worklog. |
 
+## Delphi CLI (optional)
+
+The same Delphi workflow is available as a standalone Python package at **`~/Projects/delphi-cli`** (**Gemini by default**; optional Anthropic): parallel expert calls per round, facilitator steps, Markdown report. Use it when you want **separate HTTP requests** per expert instead of one giant chat.
+
+```bash
+cd ~/Projects/delphi-cli && python3 -m venv .venv && source .venv/bin/activate
+pip install -e .             # Gemini; add '.[anthropic]' for Claude
+# Keys: ~/.env_common (default) or export GEMINI_API_KEY — see env.sample in that repo
+delphi run "Your theme here" --rounds 3
+delphi run "Quick brainstorm" --brief
+delphi run "Theme" --provider anthropic   # requires pip install -e ".[anthropic]" + ANTHROPIC_API_KEY
+```
+
+For a global `delphi` on your PATH: **`pipx install ~/Projects/delphi-cli`** (or `pipx install --editable ~/Projects/delphi-cli` while developing). See that repository’s `README.md` for options and limits.
+
 ## Installation
 
 Copy or symlink command files into your Claude Code commands folder:
